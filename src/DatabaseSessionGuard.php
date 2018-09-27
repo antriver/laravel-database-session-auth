@@ -52,16 +52,25 @@ class DatabaseSessionGuard implements StatefulGuard
      *
      * @var bool
      */
-    private $checkCookies;
+    private $checkCookies = false;
+
+    /**
+     * When creating a session should an existing one be re-used if the IP matches?
+     *
+     * @var bool
+     */
+    private $reuseSessions = false;
 
     public function __construct(
         UserProvider $provider,
         Request $request,
-        bool $checkCookies = false
+        bool $checkCookies = false,
+        bool $reuseSessions = false
     ) {
         $this->provider = $provider;
         $this->request = $request;
         $this->checkCookies = $checkCookies;
+        $this->reuseSessions = $reuseSessions;
     }
 
     /**
@@ -305,7 +314,7 @@ class DatabaseSessionGuard implements StatefulGuard
     {
         $ip = (string) $this->request->getClientIp();
 
-        if ($existingSessionId = $this->findReusableSession($user, $ip)) {
+        if ($this->reuseSessions && $existingSessionId = $this->findReusableSession($user, $ip)) {
             $sessionId = $existingSessionId;
         } else {
             $sessionId = $this->createSession($user, $ip);

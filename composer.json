@@ -1,0 +1,19 @@
+{
+    "name": "tmd/laravel-database-session-auth",
+    "description": "Laravel auth guard that stores a session token in the database.",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Anthony Kuske",
+            "email": "anthonykuske@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Tmd\\LaravelDatabaseSessionAuth\\": "src/"
+        }
+    },
+    "require": {
+        "laravel/framework": "5.6.*"
+    }
+}

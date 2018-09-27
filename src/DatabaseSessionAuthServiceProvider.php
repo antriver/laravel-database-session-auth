@@ -2,6 +2,7 @@
 
 namespace Tmd\LaravelDatabaseSessionAuth;
 
+use Auth;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;

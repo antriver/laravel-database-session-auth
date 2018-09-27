@@ -303,6 +303,28 @@ class DatabaseSessionGuard implements StatefulGuard
         Cache::forget($cacheKey);
     }
 
+    public function getAllActiveSessions($userId)
+    {
+        return DB::selectAll(
+            "SELECT * FROM `{$this->table}` WHERE `userId` = ? AND `loggedOutAt` IS NULL ORDER BY `loggedInAt` DESC",
+            [
+                $userId
+            ]
+        );
+    }
+
+    public function logoutAllSessions($userId): int
+    {
+        $activeSessions = $this->getAllActiveSessions($userId);
+        $count = 0;
+        foreach ($activeSessions as $activeSession) {
+            $this->logoutSession($activeSession->id);
+            ++$count;
+        }
+
+        return $count;
+    }
+
     /**
      * Create (or re-use) a session ID for a user.
      *

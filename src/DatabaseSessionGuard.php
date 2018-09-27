@@ -46,12 +46,22 @@ class DatabaseSessionGuard implements StatefulGuard
      */
     protected $sessionId;
 
+    /**
+     * Should cookies be checked for the inputKey?
+     * Note this will not set a cookie on login. You need to do that yourself.
+     *
+     * @var bool
+     */
+    private $checkCookies;
+
     public function __construct(
         UserProvider $provider,
-        Request $request
+        Request $request,
+        bool $checkCookies = false
     ) {
         $this->provider = $provider;
         $this->request = $request;
+        $this->checkCookies = $checkCookies;
     }
 
     /**
@@ -106,25 +116,31 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * Get the token for the current request.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTokenForRequest()
+    public function getTokenForRequest(): ?string
     {
-        $token = $this->request->query($this->inputKey);
-
-        if (empty($token)) {
-            $token = $this->request->input($this->inputKey);
+        // Check query parameters.
+        if ($token = $this->request->query($this->inputKey)) {
+            return $token;
         }
 
-        if (empty($token)) {
-            $token = $this->request->bearerToken();
+        // Check post data.
+        if ($token = $this->request->input($this->inputKey)) {
+            return $token;
         }
 
-        if (empty($token)) {
-            $token = $this->request->getPassword();
+        // Check "Authorization: Bearer xxx" header
+        if ($token = $this->request->bearerToken()) {
+            return $token;
         }
 
-        return $token;
+        // Check cookie
+        if ($this->checkCookies && $token = $this->request->cookie($this->inputKey)) {
+            return $token;
+        }
+
+        return null;
     }
 
     /**

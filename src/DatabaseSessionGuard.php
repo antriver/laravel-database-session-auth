@@ -305,7 +305,7 @@ class DatabaseSessionGuard implements StatefulGuard
 
     public function getAllActiveSessions($userId)
     {
-        return DB::selectAll(
+        return DB::select(
             "SELECT * FROM `{$this->table}` WHERE `userId` = ? AND `loggedOutAt` IS NULL ORDER BY `loggedInAt` DESC",
             [
                 $userId

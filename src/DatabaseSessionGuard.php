@@ -34,6 +34,11 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * @var string
      */
+    protected $cookieName = 'token';
+
+    /**
+     * @var string
+     */
     protected $table = 'user_sessions';
 
     /**
@@ -71,6 +76,38 @@ class DatabaseSessionGuard implements StatefulGuard
         $this->request = $request;
         $this->checkCookies = $checkCookies;
         $this->reuseSessions = $reuseSessions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInputKey(): string
+    {
+        return $this->inputKey;
+    }
+
+    /**
+     * @param string $inputKey
+     */
+    public function setInputKey(string $inputKey): void
+    {
+        $this->inputKey = $inputKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCookieName(): string
+    {
+        return $this->cookieName;
+    }
+
+    /**
+     * @param string $cookieName
+     */
+    public function setCookieName(string $cookieName): void
+    {
+        $this->cookieName = $cookieName;
     }
 
     /**
@@ -145,7 +182,7 @@ class DatabaseSessionGuard implements StatefulGuard
         }
 
         // Check cookie
-        if ($this->checkCookies && $token = $this->request->cookie($this->inputKey)) {
+        if ($this->checkCookies && $token = $this->request->cookie($this->cookieName)) {
             return $token;
         }
 

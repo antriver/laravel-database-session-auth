@@ -149,7 +149,7 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * Validate a user's credentials.
      *
-     * @param  array $credentials
+     * @param array $credentials
      *
      * @return bool
      */
@@ -192,8 +192,8 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * Attempt to authenticate a user using the given credentials.
      *
-     * @param  array $credentials
-     * @param  bool $remember
+     * @param array $credentials
+     * @param bool $remember
      *
      * @return bool
      */
@@ -205,7 +205,7 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * Log a user into the application without sessions or cookies.
      *
-     * @param  array $credentials
+     * @param array $credentials
      *
      * @return bool
      * @throws Exception
@@ -223,8 +223,8 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * Log a user into the application.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  bool $remember
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param bool $remember
      */
     public function login(Authenticatable $user, $remember = false)
     {
@@ -235,8 +235,8 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * Log the given user ID into the application.
      *
-     * @param  mixed $id
-     * @param  bool $remember
+     * @param mixed $id
+     * @param bool $remember
      *
      * @return Authenticatable
      * @throws Exception
@@ -256,7 +256,7 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * Log the given user ID into the application without sessions or cookies.
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return bool
      * @throws Exception
@@ -345,7 +345,7 @@ class DatabaseSessionGuard implements StatefulGuard
         return DB::select(
             "SELECT * FROM `{$this->table}` WHERE `userId` = ? AND `loggedOutAt` IS NULL ORDER BY `loggedInAt` DESC",
             [
-                $userId
+                $userId,
             ]
         );
     }
@@ -424,7 +424,7 @@ class DatabaseSessionGuard implements StatefulGuard
      */
     protected function createSession(Authenticatable $user, string $ip): string
     {
-        $newSessionId = $this->generateSessionId();
+        $newSessionId = static::generateSessionId();
 
         DB::insert(
             "INSERT INTO `{$this->table}` (`id`,`userId`, `ip`) VALUES (?, ?, ?)",
@@ -441,7 +441,7 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * @return string
      */
-    protected function generateSessionId(): string
+    public static function generateSessionId(): string
     {
         return Str::random(50);
     }

@@ -1,5 +1,5 @@
 {
-    "name": "tmd/laravel-database-session-auth",
+    "name": "antriver/laravel-database-session-auth",
     "description": "Laravel auth guard that stores a session token in the database.",
     "type": "library",
     "authors": [
@@ -10,10 +10,10 @@
     ],
     "autoload": {
         "psr-4": {
-            "Tmd\\LaravelDatabaseSessionAuth\\": "src/"
+            "Antriver\\LaravelDatabaseSessionAuth\\": "src/"
         }
     },
     "require": {
-        "laravel/framework": "5.6.*"
+        "laravel/framework": "^5.6"
     }
 }

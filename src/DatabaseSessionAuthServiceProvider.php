@@ -1,6 +1,6 @@
 <?php
 
-namespace Tmd\LaravelDatabaseSessionAuth;
+namespace Antriver\LaravelDatabaseSessionAuth;
 
 use Auth;
 use Illuminate\Contracts\Container\Container;
@@ -22,5 +22,4 @@ class DatabaseSessionAuthServiceProvider extends ServiceProvider
             }
         );
     }
-
 }

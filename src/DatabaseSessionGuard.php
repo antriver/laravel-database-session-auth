@@ -1,6 +1,6 @@
 <?php
 
-namespace Tmd\LaravelDatabaseSessionAuth;
+namespace Antriver\LaravelDatabaseSessionAuth;
 
 use Cache;
 use Carbon\Carbon;

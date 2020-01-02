@@ -14,11 +14,15 @@ class DatabaseSessionAuthServiceProvider extends ServiceProvider
         Auth::extend(
             'database-session',
             function (Container $app, $name, array $config) {
-                return new DatabaseSessionGuard(
+                $guard = new DatabaseSessionGuard(
                     app('auth')->createUserProvider($config['provider']),
                     $app->make(Request::class),
                     !empty($config['checkCookies'])
                 );
+                $guard->setCookieName(
+                    !empty($config['cookieName']) ? $config['cookieName'] : null
+                );
+                return $guard;
             }
         );
     }

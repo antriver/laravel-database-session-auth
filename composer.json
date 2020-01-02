@@ -2,6 +2,7 @@
     "name": "antriver/laravel-database-session-auth",
     "description": "Laravel auth guard that stores a session token in the database.",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Anthony Kuske",

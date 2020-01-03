@@ -20,7 +20,7 @@ class DatabaseSessionAuthServiceProvider extends ServiceProvider
                     !empty($config['checkCookies'])
                 );
                 $guard->setCookieName(
-                    !empty($config['cookieName']) ? $config['cookieName'] : null
+                    !empty($config['cookieName']) ? $config['cookieName'] : ''
                 );
                 return $guard;
             }

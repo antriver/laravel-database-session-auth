@@ -17,6 +17,10 @@ class DatabaseSessionGuard implements StatefulGuard
 {
     use GuardHelpers;
 
+    const DEFAULT_INPUT_KEY = 'token';
+
+    const DEFAULT_COOKIE_NAME = 'token';
+
     /**
      * How long (in minutes) to cache the user ID for a session ID?
      *
@@ -29,12 +33,12 @@ class DatabaseSessionGuard implements StatefulGuard
     /**
      * @var string
      */
-    protected $inputKey = 'token';
+    protected $inputKey = self::DEFAULT_INPUT_KEY;
 
     /**
      * @var string
      */
-    protected $cookieName = 'token';
+    protected $cookieName = self::DEFAULT_COOKIE_NAME;
 
     /**
      * @var string
@@ -91,7 +95,7 @@ class DatabaseSessionGuard implements StatefulGuard
      */
     public function setInputKey(string $inputKey): void
     {
-        $this->inputKey = $inputKey;
+        $this->inputKey = $inputKey ?: self::DEFAULT_INPUT_KEY;
     }
 
     /**
@@ -107,7 +111,7 @@ class DatabaseSessionGuard implements StatefulGuard
      */
     public function setCookieName(string $cookieName): void
     {
-        $this->cookieName = $cookieName;
+        $this->cookieName = $cookieName ?: self::DEFAULT_COOKIE_NAME;
     }
 
     /**

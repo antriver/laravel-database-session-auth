@@ -12,6 +12,7 @@ use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Tokenly\TokenGenerator\TokenGenerator;
 
 class DatabaseSessionGuard implements StatefulGuard
 {
@@ -447,7 +448,7 @@ class DatabaseSessionGuard implements StatefulGuard
      */
     public static function generateSessionId(): string
     {
-        return Str::random(50);
+        return $token = (new TokenGenerator())->generateToken(64);
     }
 
     /**

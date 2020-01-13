@@ -448,7 +448,7 @@ class DatabaseSessionGuard implements StatefulGuard
      */
     public static function generateSessionId(): string
     {
-        return $token = (new TokenGenerator())->generateToken(64);
+        return (new TokenGenerator())->generateToken(64);
     }
 
     /**
